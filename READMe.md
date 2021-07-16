@@ -1,4 +1,4 @@
-# second change made to trigger cicd pipeline with github webhook
+# Multi Machine automated deployment
 
 ## Sparta Node Sample App
 
