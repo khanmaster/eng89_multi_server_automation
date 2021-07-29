@@ -76,7 +76,7 @@ The test for posts will fail ( as expected ) if the database has not been correc
 - Check the key `cat filipejenkins.pub`
 - Copy it and paste on GitHub repo, under repo settings, deploy keys, add key
 
-### Jenkins Create Pipeline
+### Jenkins Create Simple Pipeline
 
 #### Create a pipeline item to be ran when the other item runs
 
@@ -102,3 +102,32 @@ The test for posts will fail ( as expected ) if the database has not been correc
 
 - Build the main job and see if it ran, also check if it built a new job for pipeline item
 - To see if job ran, check console output next to each item name
+
+
+### Jenkins Pipeline with GitHub
+
+1. New item `filipe_cicd_pipeline`
+2. Freestyle project
+3. Click on GitHub project and copy the URL from `code > https` and paste on Jenkins
+4. Restrict where this project can be run `sparta-ubuntu-node`
+5. Source Code Management > Git > go to GitHub and copy URL from `code > SSH` and paste it on repository url in Jenkins
+6. Credentials add the private key > add > Jenkins:
+	- Kind `SSH username with private key`
+	- username `eng89_filipe`
+	- Private Key enter directly > Paste your private key from localhost INCLUDING THE `------BEGIN OPENSSH AND -----END ---`
+7. Select the new key on Credentials
+8. Branches to build - change to */main
+9. Check `GitHub hook trigger for GITScm polling`
+10. Check `Provide Node & npm bin/ folder to PATH`
+11. Build execute shell
+	- cd app
+	- npm install
+	- npm test
+12. Save and Build
+
+- Go to job > workspace and check that Jenkins cloned the git repo
+
+#### Create a web-hook for Jenkins
+
+- Copy Jenkins IP address from URL
+- Go to GitHub > Repo Settings > webhooks > add webhook > Payload URL `http://[JENKINSIP:PORT]/github-webhook/`
