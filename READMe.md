@@ -61,5 +61,44 @@ npm test
 The test for posts will fail ( as expected ) if the database has not been correctly setup.
 
 
+## Jenkins Pipeline
 
+<p align=center>
+	<img src=jenkins_diagram.PNG>
+</p>
 
+### Git Create new key for Jenkins
+
+- Go into your localhost .ssh folder `cd ~/.ssh`
+- Create key `ssh-keygen -t ed25519 -C "fsilva@spartaglobal.com"`
+	- file to save: `/C/Users/pabfi/.ssh/filipejenkins`
+	- password: leave blank
+- Check the key `cat filipejenkins.pub`
+- Copy it and paste on GitHub repo, under repo settings, deploy keys, add key
+
+### Jenkins Create Pipeline
+
+#### Create a pipeline item to be ran when the other item runs
+
+1. Connect to given IP and login with correct details
+2. Create a new item `new item` and give it a name `eng89_filipe`
+3. Choose `freestyle_project`
+4. Press OK
+5. Give a description to the project (Optional)
+6. Discard old build
+7. max # of build to keep `3`
+8. add build steps
+9. execute shell `uname -a`
+10. apply and save
+
+#### Create another item
+
+1. Do steps 2-9 from above with name `eng89_filipe_pipeline`
+2. post build actions
+3. Build other projects
+4. name it the pipeline item 
+5. Trigger only if build is stable
+6. apply and save
+
+- Build the main job and see if it ran, also check if it built a new job for pipeline item
+- To see if job ran, check console output next to each item name
